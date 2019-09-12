@@ -2,11 +2,70 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>My Web Page</title>
+        <title>Robert's Note Taking App</title>
     </head>
 
+   
     <body>
         <!-- This is a comment -->
-        <h1>Hello World!</h1>
+        <h1>My-Note Taking App</h1>
+        <p>Type in the box below. Ctrl+s to save. Ctrl+c to delete</p>
+        <div id="note" contenteditable></div>
+       
     </body>
+    
 </html>
+
+<script src="https://unpkg.com/filer/dist/filer.min.js"></script>
+<script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+
+<script>
+
+const fs = new Filer.FileSystem();
+
+hotkeys.filter = function(event) {
+  
+  var tagName = (event.target || event.srcElement).tagName;
+  return !(tagName.isContentEditable);
+  }
+
+window.addEventListener('DOMContentLoaded', (event)=>{
+
+    fs.readFile('/note', 'utf8', function(error, data){
+        try{
+
+            if (error) throw err;
+            if (data){
+                document.querySelector('#note').innerHTML=data;
+            }
+        }
+        catch(err){
+
+            document.querySelector('#note').innerHTML="Welcome to my notepad. Type here";
+        }
+
+
+    })
+})
+
+//saves what is in the notepad
+hotkeys('ctrl+s', function() {
+                fs.writeFile('/note', document.querySelector('#note').innerHTML, err => {
+                if (err) throw err;
+                else alert('Note saved');
+                });
+             }); 
+
+
+
+//clears what is in notepad and sets the defualt text             
+hotkeys('ctrl+c', function(){
+
+    fs.
+    document.querySelector('#note').innerHTML= "Welcome to my notepad. Type here"
+    alert("note cleared!");
+})
+             
+
+
+</script>
