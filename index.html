@@ -50,6 +50,7 @@ window.addEventListener('DOMContentLoaded', (event)=>{
 
 //saves what is in the notepad
 hotkeys('ctrl+s', function() {
+                event.preventDefault();
                 fs.writeFile('/note', document.querySelector('#note').innerHTML, err => {
                 if (err) throw err;
                 else alert('Note saved');
