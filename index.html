@@ -47,17 +47,43 @@ window.addEventListener('DOMContentLoaded', (event)=>{
 
 
     })
+
+
+    setInterval(() => {
+        saveFile(false);
+    }, 2000);
 })
 
 //saves what is in the notepad
-hotkeys('ctrl+s', function() {
-                event.preventDefault();
-                fs.writeFile('/note', document.querySelector('#note').innerHTML, err => {
-                if (err) throw err;
-                else alert('Note saved');
-                });
-             }); 
+hotkeys('ctrl+s', function () {
+    event.preventDefault();
+    saveFile(true);
+}); 
 
+
+
+//refactored code to re-use
+//if parameter verbose is true, message will be alerted as opposed to console.logged
+function saveFile(verbose) {
+    fs.writeFile('/note', document.querySelector('#note').innerHTML, err => {
+        if (err){
+            communicate("Could not save", verbose);
+        } else{
+            communicate("Saved!", verbose);
+        }
+        
+    });
+
+}
+
+
+function communicate(message, verbose = false){
+    if(verbose){
+        alert(message);
+    } else{
+        console.log(message);
+    }
+}
 
 
 //clears what is in notepad and sets the defualt text             
