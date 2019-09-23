@@ -11,6 +11,8 @@
         <h1>My-Note Taking App</h1>
         <p>Type in the box below. Ctrl+s to save. Ctrl+c to delete</p>
         <div id="note" contenteditable></div>
+        <!--Added button issue #8-->
+        <button class="btn btn-info mt-2" id="save" type="button" onclick="saveFile(true)">Save</button>
        
     </body>
     
@@ -61,10 +63,10 @@ hotkeys('ctrl+s', function () {
 }); 
 
 
-
 //refactored code to re-use
 //if parameter verbose is true, message will be alerted as opposed to console.logged
 function saveFile(verbose) {
+    console.log('save file')
     fs.writeFile('/note', document.querySelector('#note').innerHTML, err => {
         if (err){
             communicate("Could not save", verbose);
