@@ -14,6 +14,8 @@
         <!--Added button issue #8-->
         <button class="btn btn-info mt-2" id="save" type="button" onclick="saveFile(true)">Save</button>
        
+        <!--Added button "Download" issue #12-->
+        <button class="btn btn-info mt-2" id="download" type="button" onclick="downloadNote()">Download</button>
     </body>
     
 </html>
@@ -21,6 +23,7 @@
 <link rel="stylesheet" href="styles.css">
 <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
 <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+<script src="http://cdn.jsdelivr.net/g/filesaver.js"></script>
 
 <script>
 
@@ -78,6 +81,12 @@ function saveFile(verbose) {
 
 }
 
+// Functionality to download the note as ".txt" file using library FileSaver.js
+function downloadNote(){
+    var file = new File([document.querySelector('#note').innerHTML], "note.txt", {type: "text/plain;charset=utf-8"});
+    saveAs(file);
+    console.log("Note downloaded!");
+}
 
 function communicate(message, verbose = false){
     if(verbose){
